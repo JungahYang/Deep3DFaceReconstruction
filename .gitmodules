@@ -1,0 +1,3 @@
+[submodule "3D_Scanner/3D_Scanner/3DDFA_V2"]
+	path = 3D_Scanner/3D_Scanner/3DDFA_V2
+	url = https://github.com/Scalawox-Corp/3D_Scanner
