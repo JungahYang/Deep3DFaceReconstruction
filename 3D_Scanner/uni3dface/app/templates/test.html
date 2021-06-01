@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>2D FACE to 3D MODEL</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #212529;
+    }
+    .jumbotron {
+      margin-top: 2rem;
+    }    
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <div class="jumbotron">
+          <h3 style="text-align: center;">3D Face 생성 페이지</h3>
+          <hr>
+          <p>
+            사진을 선택한 후 생성 버튼을 클릭하십시오. (JPG 또는 PNG)
+          </p>
+          <form id="upload-form" method="post" enctype="multipart/form-data" action="/result">
+            <div class="input-group mb-3">
+              <span class="input-group-btn">
+                <button id='file-choose-btn' class="btn btn-secondary" type="button">사진 선택</button>
+                <input id="upload-file" name="file" type="file" accept="image/*" style="display: none;">
+              </span>
+              <input name='file-name' type="text" class="form-control" readonly>
+              <span class="input-group-btn">
+                <button id="upload-btn" class="btn btn-primary" type="button">생성</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(document).on('change', ':file', function() {
+      var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+    });
+
+    $(document).ready( function() {
+      $(':file').on('fileselect', function(event, numFiles, label) {
+        var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+        if( input.length ) {
+            input.val(log);
+        } else {
+            if( log ) alert(log);
+        }
+      });
+
+      $('#file-choose-btn').click(function (e) {
+        $('#upload-file').trigger('click');
+      });
+
+      $('#upload-btn').click(function (e) {
+        if($('#upload-file').val() == '')
+          alert('생성할 사진을 선택하십시오.');
+        else
+          $('#upload-form').submit();
+      });
+    });
+  </script>
+</body>
+</html>
